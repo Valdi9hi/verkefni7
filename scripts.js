@@ -8,7 +8,19 @@ const LETTERS = `AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ`;
  * Byrja forrit.
  */
 function start() {
-  alert('Halló!')
+  input = prompt('Hvort viltu kóða eða afkóða streng?');
+  if ( input ==='kóða' ) {
+    let tala = prompt('Hversu mikið viltu hliðra streng?');
+    let n = parseInt(tala);
+    alert("n");
+  }
+  else if (input === 'afkóða' ){
+    let tala = prompt('Gefðu upp strenginn sem á að hliðra um' );
+  }
+  else {
+    alert('Veit ekki hvaða aðgerð',,'er. Reyndu aftur.');
+    start();
+  }
 }
 
 // Hér er gott að commenta út til að vinna í encode/decode föllum fyrst og síðan „viðmóti“ forrits
