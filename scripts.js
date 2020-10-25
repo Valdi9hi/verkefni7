@@ -3,7 +3,7 @@
  */
 
 const LETTERS = `AÁBDÐEÉFGHIÍJKLMNOÓPRSTUÚVXYÝÞÆÖ`;
-let code = true;
+var strengur;
 "use strict";
 /**
  * Byrja forrit.
@@ -17,14 +17,16 @@ function start() {
         alert(`Niðurstaða:\r\n ${encode(par.strengur,par.n)}`);
       } else if (input === 'afkóða') {
           let par = dulspurning(input);
-        alert(`Niðurstaða:\r\n ${decode(par.strengur,par.n)}`);
+          alert(`Niðurstaða:\r\n ${decode(par.strengur,par.n)}`);
       } else {
           alert(`Veit ekki hvaða aðgerð ${input} er. Reyndu aftur.`);
           start();
       }
   } while (confirm('Viltu halda áfram?'))
 }
- 
+/**
+ * Spyr hvort 
+ */
 function spurning(){
   let svar = prompt('Hvort viltu kóða eða afkóða streng');
   return `${svar}`
@@ -33,22 +35,25 @@ function spurning(){
 function dulspurning(input){
   let n = prompt('Hversu mikið á að hliðra streng? Gefðu upp heiltölu á bilinu [1, 31]');
   if (n > -1 && n < 33){
-    let strengur = prompt(`Hvaða streng viltu ${input}?`);
+    strengur = prompt(`Hvaða streng viltu ${input}?`).toLocaleUpperCase();
+    console.log(strengur);
     var invalid = [];
-    for (var i = 0 ;i < strengur.length-1; i++) {
+    for (var i = 0 ;i < strengur.length; i++) {
       console.log(LETTERS.indexOf(strengur[i]));
+      console.log(strengur);
       if (LETTERS.indexOf(strengur[i]) === -1) {
         invalid.push(strengur[i]);
+        console.log(invalid);
       }
     }
-    if (strengur !== null || invalid.length === 0 ){
+    if (strengur.length === 0 || invalid.length !== 0){
+      alert(`Þú gafst upp stafi sem ekki er hægt að ${input}: ${invalid.join(', ')}. Reyndu aftur.`);
+      start();
+    } else {
       return {
         strengur,
         n,
       }
-    } else {
-        alert(`Þú gafst upp stafi sem ekki er hægt að ${input}: ${invalid.join(', ')}. Reyndu aftur.`);
-        start();
     }
   } else {
     alert(`${n} er ekki heiltala á bilinu [1, 31]. Reyndu aftur.`);
@@ -70,7 +75,6 @@ function encode(str, n) {
   let code = '';
   for (var i = 0; i < str.length; i++) {
     code += Caesar[LETTERS.indexOf(str[i])];
-    console.log(code);
   }
   return code;
 }
@@ -88,7 +92,6 @@ function decode(str, n) {
   console.log(Caesar)
   for (var i = 0; i < str.length; i++) {
     code += LETTERS[Caesar.indexOf(str[i])];
-    console.log(code);
   }
   return code;
 }
